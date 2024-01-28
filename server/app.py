@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request
 from flask_migrate import Migrate
 from models import db, Hero, HeroPower, Power
 from flask_restful import Api, Resource
@@ -35,6 +35,7 @@ class Heroes(Resource):
 api.add_resource(Heroes, "/heroes")
 
 class HeroById(Resource):
+
     def get(self, id):
         hero=Hero.query.filter(Hero.id == id).first()
 
@@ -121,6 +122,24 @@ class PowerByID(Resource):
             pass
 
 api.add_resource(PowerByID, "/powers/<int:id>")
+
+class HeroPowers(Resource):
+
+    def post(self):
+        new_hero_power=HeroPower(
+            strength=request.form["strength"],
+            power_id=request.form["power_id"],
+            hero_id=request.form["hero_id"]
+        )
+
+        db.session.add(new_hero_power)
+        db.session.commit()
+
+        response=HeroById().get(new_hero_power.hero_id)
+        print(response)
+        return make_response(response, 201)
+
+api.add_resource(HeroPowers, "/hero_powers")
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
