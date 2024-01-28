@@ -27,6 +27,7 @@ class Heroes(Resource):
             hero={
                 "id": hero.id,  
                 "name": hero.name,
+                "super_name": hero.super_name
             }
             response.append(hero)
 
@@ -54,7 +55,6 @@ class HeroById(Resource):
                 "powers": []
             })
             for power in hero.powers:
-                print(power)
                 power_dict={
                     "id": power.id,
                     "name": power.name,
@@ -119,21 +119,13 @@ class PowerByID(Resource):
             return make_response(jsonify(response), 404)
         
         elif power_to_patch:
+            for attr in request.json:
+                setattr(power_to_patch, attr, request.json[attr])
 
-            if ValueError:
-                response={
-                "error": ["validation errors"]
-                }
-                return make_response(jsonify(response), 422)
+            db.session.add(power_to_patch)
+            db.session.commit()
             
-            else:
-                for attr in request.json:
-                    setattr(power_to_patch, attr, request.json[attr])
-
-                db.session.add(power_to_patch)
-                db.session.commit()
-                
-                return make_response(PowerByID().get(power_to_patch.id),200)
+            return make_response(PowerByID().get(power_to_patch.id),200)
 
 api.add_resource(PowerByID, "/powers/<int:id>")
 
