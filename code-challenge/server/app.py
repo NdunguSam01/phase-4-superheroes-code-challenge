@@ -138,12 +138,19 @@ class HeroPowers(Resource):
             hero_id=request.form["hero_id"]
         )
 
-        db.session.add(new_hero_power)
-        db.session.commit()
+        if ValueError:
+            response={
+                "error": ["validation errors"]
+            }
+            return make_response(jsonify(response), 422)
+        
+        else:
+            db.session.add(new_hero_power)
+            db.session.commit()
 
-        response=HeroById().get(new_hero_power.hero_id)
-        print(response)
-        return make_response(response, 201)
+            response=HeroById().get(new_hero_power.hero_id)
+            print(response)
+            return make_response(response, 201)
 
 api.add_resource(HeroPowers, "/hero_powers")
 

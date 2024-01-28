@@ -67,7 +67,7 @@ class HeroPower(db.Model, SerializerMixin):
         valid_strngths=['Strong', 'Weak', 'Average']
 
         if strength not in valid_strngths:
-            raise ValueError("Strength must be Strong, Weak or Average")
+            return ValueError("Strength must be Strong, Weak or Average")
         
         return strength
 
