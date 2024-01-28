@@ -5,6 +5,10 @@ from random import choice
 if __name__ == "__main__":
     with app.app_context():
         
+        Hero.query.delete()
+        HeroPower.query.delete()
+        Power.query.delete()
+        
         powers=[]
 
         powers.append(Power(name="super strength", description="gives the wielder super-human strengths"))
