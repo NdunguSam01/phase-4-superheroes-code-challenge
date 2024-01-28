@@ -119,7 +119,13 @@ class PowerByID(Resource):
             return make_response(jsonify(response), 404)
         
         elif power_to_patch:
-            pass
+            for attr in request.json:
+                setattr(power_to_patch, attr, request.json[attr])
+
+            db.session.add(power_to_patch)
+            db.session.commit()
+            
+            return make_response(PowerByID().get(power_to_patch.id),200)
 
 api.add_resource(PowerByID, "/powers/<int:id>")
 
