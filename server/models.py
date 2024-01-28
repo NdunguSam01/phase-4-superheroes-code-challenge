@@ -39,8 +39,11 @@ class Power(db.Model, SerializerMixin):
 
     @validates("description")
     def  validate_description(self, key, description):
-        if len(description) < 20:
-            raise ValueError("Description cannot be empty and must be at least 20 characters long")
+        
+        if not description:
+            raise ValueError("Description cannot be empty")
+        elif len(description) < 20 :
+            raise ValueError("Description must be at least 20 characters long")
         
         return description
 

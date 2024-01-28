@@ -45,21 +45,23 @@ class HeroById(Resource):
             return make_response(jsonify(response),404)
         
         else:        
+            response=[]
+            response.append({
+                "id": hero.id,
+                "name": hero.name,
+                "super_name": hero.super_name,
+                "powers": []
+            })
             for power in hero.powers:
-                hero_dict={
-                    f"id": hero.id,
-                    "name": hero.name,
-                    "super_name": hero.super_name,
-                    "powers": [
-                        {
-                            "id": power.id,
-                            "name": power.name,
-                            "description": power.description
-                        }
-                    ]
+                print(power)
+                power_dict={
+                    "id": power.id,
+                    "name": power.name,
+                    "description": power.description
                 }
-                response= make_response(jsonify(hero_dict), 200)
-                return response
+                response[0]["powers"].append(power_dict)
+            
+            return make_response(jsonify(response), 200)
 
 api.add_resource(HeroById, "/heroes/<int:id>")
     
@@ -85,6 +87,7 @@ class Powers(Resource):
 api.add_resource(Powers, "/powers")
 
 class PowerByID(Resource):
+
     def get(self, id):
 
         power=Power.query.filter(Power.id == id).first()
@@ -103,6 +106,19 @@ class PowerByID(Resource):
                 }
             
             return make_response(jsonify(power_dict), 200)
+        
+    def patch(self, id):
+
+        power_to_patch=Power.query.filter(Power.id == id).first()
+
+        if not power_to_patch:
+            response={
+                "error": "Power not found"
+            }
+            return make_response(jsonify(response), 404)
+        
+        elif power_to_patch:
+            pass
 
 api.add_resource(PowerByID, "/powers/<int:id>")
 
