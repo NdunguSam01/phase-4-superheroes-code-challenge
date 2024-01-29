@@ -46,23 +46,25 @@ class HeroById(Resource):
             }
             return make_response(jsonify(response),404)
         
-        else:        
-            response=[]
-            response.append({
+        else:   
+
+            hero_details={
                 "id": hero.id,
                 "name": hero.name,
                 "super_name": hero.super_name,
                 "powers": []
-            })
+            }     
+
             for power in hero.powers:
                 power_dict={
                     "id": power.id,
                     "name": power.name,
                     "description": power.description
                 }
-                response[0]["powers"].append(power_dict)
+
+                hero_details["powers"].append(power_dict)
             
-            return make_response(jsonify(response), 200)
+            return make_response(jsonify(hero_details), 200)
 
 api.add_resource(HeroById, "/heroes/<int:id>")
     
@@ -119,14 +121,20 @@ class PowerByID(Resource):
             }
             return make_response(jsonify(response), 404)
         
-        elif power_to_patch:
-            for attr in request.json:
-                setattr(power_to_patch, attr, request.json[attr])
+        else:            
+            try:
+                for attr in request.json:
+                    setattr(power_to_patch, attr, request.json[attr])
 
-            db.session.add(power_to_patch)
-            db.session.commit()
+                db.session.add(power_to_patch)
+                db.session.commit()
+                return make_response(PowerByID().get(power_to_patch.id),200)
             
-            return make_response(PowerByID().get(power_to_patch.id),200)
+            except ValueError: 
+                response = {
+                    "errors": ["Validation errors"]
+                }
+                return make_response(jsonify(response), 422)
 
 api.add_resource(PowerByID, "/powers/<int:id>")
 
@@ -143,7 +151,6 @@ class HeroPowers(Resource):
         db.session.commit()
 
         response=HeroById().get(new_hero_power.hero_id)
-        print(response)
         return make_response(response, 201)
 
 api.add_resource(HeroPowers, "/hero_powers")

@@ -46,7 +46,8 @@ class Power(db.Model, SerializerMixin):
         elif len(description) < 20 :
             return ValueError("Description must be at least 20 characters long")
         
-        return description
+        else:
+            return description
 
     def __repr__(self):
         return f"\nPower name: {self.name}\nDescription: {self.description}\nCreated at: {self.created_at}\n"
@@ -60,14 +61,14 @@ class HeroPower(db.Model, SerializerMixin):
     hero_id=db.Column(db.Integer, db.ForeignKey('heroes.id'))
     power_id=db.Column(db.Integer, db.ForeignKey('powers.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
 
     @validates("strength")
     def  validate_strength(self, key, strength):
-        valid_strngths=['Strong', 'Weak', 'Average']
+        valid_strengths=['Strong', 'Weak', 'Average']
 
-        if strength not in valid_strngths:
+        if strength not in valid_strengths:
             return ValueError("Strength must be Strong, Weak or Average")
         
         return strength
