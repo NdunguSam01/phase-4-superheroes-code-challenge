@@ -23,7 +23,11 @@ In order to successfully view the output of this project, create a new directory
 
     Optionally, you can download the zipped file by clicking the green Code button then selecting the "Download ZIP" option.
 
-2. **Installing dependencies** - since this project needs various dependencies to run, type the following command in your terminal:
+2. **Installing dependencies** - since this project needs various dependencies to run, navigate into the server folder and type the following command in your terminal:
+
+    ```
+    cd server
+    ```
 
     ```
     pipenv install
@@ -34,26 +38,20 @@ In order to successfully view the output of this project, create a new directory
     ```
     pipenv shell
     ```
-
-3. **Creating the database** - once you have successfully cloned the project, navigate into the code-challenge folder then into the app folder
-
-    ```
-    cd code-challenge/app 
-    ```
-
-4. **Create the database** - since the project's database migration has already been done, run the following command to create an instance of the database
+    
+3. **Create the database** - once you have successfully cloned the project and entered the virtual environment, run the following command to create an instance of the database since the project's database migration has already been done
 
     ```
     flask db upgrade 
     ```
 
-5. **Seed the database** - to successfully view the results, run the seed file  which will populate the database with data
+4. **Seed the database** - to successfully view the results, run the seed file  which will populate the database with data
 
     ```
     python3 seed.py
     ```
 
-6. **Start the Flask API** - to start the Flask API, run the app.py file
+5. **Start the Flask API** - to start the Flask API, run the app.py file
 
     ```
     python3 app.py
