@@ -13,7 +13,9 @@ To successully run this project, the following software(s) need to be installed 
 
 ## Project Setup Instructions
 
-In order to successfully view the output of this project, create a new directory where you want to store the project files, navigate into it and follow the instructions below:
+### Starting the server
+
+In order to start the of this project, create a new directory where you want to store the project files, navigate into it and follow the instructions below:
 
 1. **Cloning**- clone the repository by typing the following command into your terminal:
 
@@ -57,21 +59,27 @@ In order to successfully view the output of this project, create a new directory
     python3 app.py
     ```
 
-Once the server runs, you can view the results via [http://127.0.0.1:5555/](http://127.0.0.1:5555/)
+Once the server runs, it can be accessed via [http://127.0.0.1:5555/](http://127.0.0.1:5555/)
 
-## Viewing results
-The project has the following endpoints:
+### Starting the front end
 
-1. http://127.0.0.1:5555/heroes - retrieves the details for all heroes 
-2. http://127.0.0.1:5555/heroes/:id - retrieves  a specific hero by their id
-3. http://127.0.0.1:5555/powers - retrieves all the powers in the database
-4. http://127.0.0.1:5555/powers/:id - retrieves details of a power based on the passed in id
-5. http://127.0.0.1:5555/hero_powers - adds a new hero-power into the database. It accepts a strength, hero_id and power_id as arguments
+In order to view the results on the front end, follow the following instructions:
 
-Navigate into the links above to view the results.
+1. **Install dependencies** - to install the dependencies needed to run the React application, open a new terminal and enter the following command
 
-**NB: Remember to pass in an integer  value for :id when accessing a single resource. The characters ':' should not be included in the URL.**
+    ``` 
+    npm install --prefix client
+    ```
 
+2. **Starting the React application** - run the follwoing command to start the application
+
+    ``` 
+    npm start --prefix client
+    ```
+
+Once the React application loads, you should be able to see the data loaded from the database.
+
+Follow the links displayed on the page to view the data and perform various actions on the application.
 ## Author
 
 [Samuel Muigai](https://github.com/NdunguSam01)
