@@ -135,6 +135,7 @@ class PowerByID(Resource):
                     "errors": ["Validation errors"]
                 }
                 return make_response(jsonify(response), 422)
+            
 
 api.add_resource(PowerByID, "/powers/<int:id>")
 
