@@ -75,8 +75,7 @@ class Powers(Resource):
         response=[]
 
         if not powers:
-            response.append({"error": "Power not found"})
-            return make_response(jsonify(response),404)
+            return make_response(jsonify({"error": "Power not found"}),404)
         
         else:
             for power in powers:
@@ -97,10 +96,8 @@ class PowerByID(Resource):
         power=Power.query.filter(Power.id == id).first()
 
         if not power:
-            response={
-                "error":"Power not found"
-            }
-            return make_response(jsonify(response),404)
+            
+            return make_response(jsonify({"error" : "Power not found"}),404)
         
         else:        
             power_dict={
@@ -116,10 +113,7 @@ class PowerByID(Resource):
         power_to_patch=Power.query.filter(Power.id == id).first()
 
         if not power_to_patch:
-            response={
-                "error": "Power not found"
-            }
-            return make_response(jsonify(response), 404)
+            return make_response(jsonify({"error": "Power not found"}), 404)
         
         else:            
             try:
@@ -131,10 +125,7 @@ class PowerByID(Resource):
                 return make_response(PowerByID().get(power_to_patch.id),200)
             
             except ValueError: 
-                response = {
-                    "errors": ["Validation errors"]
-                }
-                return make_response(jsonify(response), 422)
+                return make_response(jsonify({"errors": ["Validation errors"]}), 422)
             
 
 api.add_resource(PowerByID, "/powers/<int:id>")
