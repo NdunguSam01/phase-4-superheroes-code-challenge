@@ -75,6 +75,7 @@ class Powers(Resource):
         if not powers:
             response.append({"error": "Power not found"})
             return make_response(jsonify(response),404)
+        
         else:
             for power in powers:
                 power={
