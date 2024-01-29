@@ -61,7 +61,7 @@ In order to start the of this project, create a new directory where you want to 
 
 Once the server runs, it can be accessed via [http://127.0.0.1:5555/](http://127.0.0.1:5555/)
 
-### Starting the front end
+### Starting the front end application
 
 In order to view the results on the front end, follow the following instructions:
 
