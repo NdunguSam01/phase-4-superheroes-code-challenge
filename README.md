@@ -63,7 +63,7 @@ Once the server runs, it can be accessed via [http://127.0.0.1:5555/](http://127
 
 ### Starting the front end application
 
-In order to view the results on the front end, follow the following instructions:
+In order to view the results on the front end, follow the instructions below:
 
 1. **Install dependencies** - to install the dependencies needed to run the React application, open a new terminal and enter the following command
 
