@@ -133,17 +133,25 @@ api.add_resource(PowerByID, "/powers/<int:id>")
 class HeroPowers(Resource):
 
     def post(self):
-        new_hero_power=HeroPower(
-            strength=request.form["strength"],
-            power_id=request.form["power_id"],
-            hero_id=request.form["hero_id"]
-        )
 
-        db.session.add(new_hero_power)
-        db.session.commit()
+        strength=request.form["strength"]
+        power_id=request.form["power_id"]
+        hero_id=request.form["hero_id"]
 
-        response=HeroById().get(new_hero_power.hero_id)
-        return make_response(response, 201)
+        print(strength)
+        print(power_id)
+        print(hero_id)
+
+        if not strength or not power_id or not hero_id:
+            return make_response(jsonify({"errors": ["validation errors"]}), 400)
+        
+        else:
+            new_hero_power = HeroPower(strength=strength, power_id=power_id, hero_id=hero_id)
+            db.session.add(new_hero_power)
+            db.session.commit()
+
+            response=HeroById().get(new_hero_power.hero_id)
+            return make_response(response, 201)
 
 api.add_resource(HeroPowers, "/hero_powers")
 
