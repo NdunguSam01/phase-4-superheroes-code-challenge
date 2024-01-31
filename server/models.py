@@ -68,10 +68,14 @@ class HeroPower(db.Model, SerializerMixin):
     def  validate_strength(self, key, strength):
         valid_strengths=['Strong', 'Weak', 'Average']
 
-        if strength not in valid_strengths:
+        if not strength:
+            return ValueError("Strength cannot be empty")
+         
+        elif strength not in valid_strengths:
             return ValueError("Strength must be Strong, Weak or Average")
         
-        return strength
+        else:
+            return strength
 
     def __repr__(self):
         return f"\nStrength: {self.strength}\nSuper Hero: {self.hero}\nPower name: {self.power}\n"

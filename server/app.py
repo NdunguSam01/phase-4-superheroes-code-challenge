@@ -137,14 +137,10 @@ class HeroPowers(Resource):
         strength=request.form["strength"]
         power_id=request.form["power_id"]
         hero_id=request.form["hero_id"]
-
-        print(strength)
-        print(power_id)
-        print(hero_id)
-
-        if not strength or not power_id or not hero_id:
-            return make_response(jsonify({"errors": ["validation errors"]}), 400)
         
+        if HeroPower().validate_strength(key=strength, strength=strength) != strength:
+            return make_response(jsonify({"errors": ["Validation errors"]}), 422)
+                
         else:
             new_hero_power = HeroPower(strength=strength, power_id=power_id, hero_id=hero_id)
             db.session.add(new_hero_power)
