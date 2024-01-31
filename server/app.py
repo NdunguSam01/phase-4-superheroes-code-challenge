@@ -135,12 +135,16 @@ class HeroPowers(Resource):
 
     def post(self):
 
-        strength=request.form["strength"]
-        power_id=request.form["power_id"]
-        hero_id=request.form["hero_id"]
-        
-        strength_validation=HeroPower().validate_strength(key=strength, strength=strength)
+        strength=request.json["strength"]
+        power_id=request.json["power_id"]
+        hero_id=request.json["hero_id"]
 
+        print(hero_id)
+        print(power_id)
+        print(strength)
+
+        strength_validation=HeroPower().validate_strength(key=strength, strength=strength)
+        
         if strength_validation != strength:
             return make_response(jsonify({"errors": ["Validation errors"]}), 400)
         
