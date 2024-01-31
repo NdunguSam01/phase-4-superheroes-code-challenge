@@ -115,19 +115,20 @@ class PowerByID(Resource):
         if not power_to_patch:
             return make_response(jsonify({"error": "Power not found"}), 404)
         
-        else:            
-            try:
-                for attr in request.json:
-                    setattr(power_to_patch, attr, request.json[attr])
+        else:
+            description=request.json["description"]
+        
+            print(Power().validate_description(key=description, description=description))
 
+            if Power().validate_description(key=description, description=description) != description:
+                return make_response(jsonify({"errors": ["Validation errors"]}), 400)
+            
+            else:
+                power_to_patch.description = description
                 db.session.add(power_to_patch)
                 db.session.commit()
                 return make_response(PowerByID().get(power_to_patch.id),200)
             
-            except ValueError: 
-                return make_response(jsonify({"errors": ["Validation errors"]}), 422)
-            
-
 api.add_resource(PowerByID, "/powers/<int:id>")
 
 class HeroPowers(Resource):
@@ -137,9 +138,9 @@ class HeroPowers(Resource):
         strength=request.form["strength"]
         power_id=request.form["power_id"]
         hero_id=request.form["hero_id"]
-        
+
         if HeroPower().validate_strength(key=strength, strength=strength) != strength:
-            return make_response(jsonify({"errors": ["Validation errors"]}), 422)
+            return make_response(jsonify({"errors": ["Validation errors"]}), 400)
                 
         else:
             new_hero_power = HeroPower(strength=strength, power_id=power_id, hero_id=hero_id)
